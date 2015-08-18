@@ -1,0 +1,131 @@
+# INSTALL PACKAGE
+install.packages("ggplot2")
+library(ggplot2)
+
+# --- --- ---
+## EVALUATION
+x <- 1
+print(x)
+
+x <- 1:2 # array doesn't start by 0
+x[1] <- 10
+x[2] <- 20
+
+# --- --- ---
+# VECTOR
+# can only contain elements by the same class or it is possible to cast 
+vec1 <- c(0.1, 0.2)
+vec2 <- c("a", "b", "c")
+vec3 <- c(TRUE, FALSE)
+vec4 <- c(TRUE, "true") # character
+vec5 <- c(TRUE, 1) # numeric
+
+# --- --- ---
+# COMMAND CLASS PRINTS THE TYPE OF THE VARIABLE
+class(vec5)
+class(vec4)
+
+# --- --- ---
+# CONVERTING VALUES
+y <- as.numeric(FALSE) 	# 0
+y <- as.character(y)	# "0"
+y <- as.numeric("a")	# Error: NA
+
+# --- --- ---
+# LIST
+# accepts elements by different types
+list1 <- list("a","b",1,2)
+list1[[1]] # a : lists should be represented by double brackets 
+list1[[3]] # 1
+
+# --- --- ---
+# MATRIX
+matrix1 <- matrix(nrow=1, ncol=4) # filled of NA values
+# dimension of the matrix
+dim(matrix1) # row colum -> 1 4
+
+size <- 1:8
+dim(size) <- c(2,4)
+
+size <- 1:4
+size2 <- 8:11
+# create a matrix by cbind: column reference -> the lists need to have the same size
+# 8 rows, 4 columns
+cbind(size, size2) 
+/*  
+[1,]    1     8
+[2,]    2     9
+[3,]    3    10
+[4,]    4    11
+*/
+
+rbind(size, size2) 
+/*
+      [,1] [,2] [,3] [,4]
+size     1    2    3    4
+size2    8    9   10   11
+*/
+
+# --- --- ---
+# FACTOR
+factor1 <- factor( c("a","a","a","b",1,1,2,2,2) )
+factor1 # [1] a a a b 1 1 2 2 2
+		# Levels: 1 2 a b
+# count by elements of the factor
+table(factor1)  # 1 2 a b 
+				# 2 3 3 1 
+unclass(factor1)
+
+factor1 <- factor( c(3,2,3,2,1,2) ) # Levels: 1,2,3
+# to change the order
+factor1 <- factor( c(3,2,3,2,1,2), levels=c(3,2,1) ) # Levels: 3,2,1
+
+# --- --- ---
+# MISSING VALUES
+is.na( c(1,2,NA,4,5,6) )  	# FALSE FALSE  TRUE FALSE FALSE FALSE
+is.nan( c(1,2,NA,NaN,5,6) ) # FALSE FALSE FALSE  TRUE FALSE FALSE
+is.na( c(1,2,NA,NaN,5,6) )  # FALSE FALSE  TRUE  TRUE FALSE FALSE
+
+# --- --- ---
+# DATA FRAME
+# used to create simple tables
+table1 <- data.frame( column1= c("001", "002", "003") , column2= c("Marcel", "Samaruga", "Costa") )
+/*
+  column1  column2
+1     001   Marcel
+2     002 Samaruga
+3     003    Costa
+*/
+
+# shows the attributes
+attributes(table1)
+/*
+$names
+[1] "column1" "column2"
+$row.names
+[1] 1 2 3
+$class
+[1] "data.frame"
+*/
+# same as :
+names(table1) # "column1" "column2"
+row.names(table1) # 1 2 3
+
+
+# Reading tabular data
+list1 <- list(foo=1:4, bar=0.6)
+print( list[1] ) # it returns the LIST object from 1 to 4
+print( list[[1]] ) # it returns the SEQUENCE object from 1 to 4
+# accepts using the name of the column
+list1[["bar"]]
+# to represent the conjuction of elements use c() function, but it doesnt accept double bracket [[]]
+list1[c("bar","foo")]
+
+
+# --- --- ---
+# CONDITIONALS
+#IF
+if (!dir.exists("dados") && 1==1) {
+  dir.create("dados")
+  file.create("dados/dados.txt")
+}
