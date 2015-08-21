@@ -72,6 +72,32 @@ vec_vals  <- c(1, 2, 3)
 names(vec_vals) <- vec_names
 new_vector <- c("column 1" = 1, "column 2" = 2, "column 3" = 3 )
 
+# Mid-week poker results: poker_midweek
+poker_midweek <- poker_vector[c("Tuesday", "Wednesday", "Thursday")]
+
+# End-of-week roulette results: roulette_endweek
+roulette_endweek <- roulette_vector[c("Thursday", "Friday")]
+roulette_subset <- roulette_vector[c(2:5)]
+
+# naming columns and rows
+# the matrix has 3 columns
+colnames(vec_vals) <- c("Column 1", "Column 2", "Column 3")
+# 2 rows
+rownames(vec_vals) <- c("Row 1", "Row 2")
+
+# seek for subset's
+vec <- rbind( c(1,2), c(3,4), c(5,6) )
+colnames(vec) <- c("col1", "col2")
+# select one element. Row 1, Col 2
+vec[1,2]
+# select all the second row
+vec[2, c(1:2) ]
+vec[2,]
+# select all the second column
+vec[,2]
+# by name
+vec[1,"col1"]
+
 # --- --- ---
 # FACTOR
 factor1 <- factor( c("a","a","a","b",1,1,2,2,2) )
@@ -130,14 +156,6 @@ list1[c("bar","foo")]
 #select the elements
 list1 <- c(1,3,5,7)
 list1 <- list1(c(1,3)) #index
-
-# Mid-week poker results: poker_midweek
-poker_midweek <- poker_vector[c("Tuesday", "Wednesday", "Thursday")]
-
-# End-of-week roulette results: roulette_endweek
-roulette_endweek <- roulette_vector[c("Thursday", "Friday")]
-roulette_subset <- roulette_vector[c(2:5)]
-
 
 #create new vector, except certain element
 list1 <- list[-1]
