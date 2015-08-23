@@ -98,6 +98,30 @@ vec[,2]
 # by name
 vec[1,"col1"]
 
+
+# Select all US box office revenue
+star_wars_matrix[,1]
+
+# Select revenue for "A New Hope"
+star_wars_matrix[1,]
+
+# Average non-US revenue per movie: non_us_all
+non_us_all  <- mean(star_wars_matrix[,2])
+  
+# Average non-US revenue of first two movies: some_us_all
+non_us_some <- mean(star_wars_matrix[1:2,2])
+
+# Select the US revenues for "A New Hope" and "The Empire Strikes Back"
+star_wars_matrix[ c(1,2), 1 ]
+
+# Select the last two rows and both columns
+star_wars_matrix[ c(2,3),c(1,2) ]
+
+# Select the non-US revenue for "The Empire Strikes Back"
+star_wars_matrix[ 2,2 ]
+
+
+
 # --- --- ---
 # FACTOR
 factor1 <- factor( c("a","a","a","b",1,1,2,2,2) )
