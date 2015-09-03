@@ -124,6 +124,7 @@ star_wars_matrix[ 2,2 ]
 
 # --- --- ---
 # FACTOR
+# used in categorical variables
 factor1 <- factor( c("a","a","a","b",1,1,2,2,2) )
 factor1 # [1] a a a b 1 1 2 2 2
 		# Levels: 1 2 a b
@@ -135,6 +136,14 @@ unclass(factor1)
 factor1 <- factor( c(3,2,3,2,1,2) ) # Levels: 1,2,3
 # to change the order
 factor1 <- factor( c(3,2,3,2,1,2), levels=c(3,2,1) ) # Levels: 3,2,1
+
+# indicate the order of the levels
+factor_tshirt <- factor( c("S", "M", "S", "S", "L" ), ordered=TRUE, levels=c("S", "M", "L", "LL") )
+factor_tshirt <- factor( c("S", "M", "S", "S", "L" ), ordered=TRUE, levels=c("S", "M", "L", "LL"), labels=c("Small","Medium","Large","Extra Large") )
+
+summary( factor_tshirt )
+#      Small      Medium       Large Extra Large 
+#          3           1           1           0 
 
 # --- --- ---
 # MISSING VALUES
@@ -196,6 +205,13 @@ listCleant <- complete.cases(list1, list2)
 list2 <- list2[listCleant]
 list1 <- list1[listCleant]
 
+#labeling list
+song <- list( title="My Song", duration=190, track=5 )
+str(song)
+# $ title   : chr "My Song"
+# $ duration: num 190
+# $ track   : num 5
+ 
 # --- --- ---
 # CONDITIONALS
 #IF
