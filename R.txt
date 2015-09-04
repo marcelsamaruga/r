@@ -1,3 +1,6 @@
+# list the object in the workspace
+ls()
+
 # INSTALL PACKAGE
 install.packages("ggplot2")
 library(ggplot2)
@@ -35,8 +38,28 @@ y <- as.numeric("a")	# Error: NA
 # LIST
 # accepts elements by different types
 list1 <- list("a","b",1,2)
-list1[[1]] # a : lists should be represented by double brackets 
+list1[[1]] # a : [] lists should be represented by double brackets 
 list1[[3]] # 1
+
+# retrieve first and third element
+print list1[c(1,3)]
+
+
+# retriev an element from a list
+# in the case below, the second element is a list and we retrieve its first element
+print list[[2]][[1]]
+
+#if the list has names associated
+names(list1) <- c("field1","field2","field3","field4")
+list1$field1
+list1$field2
+
+# adding new element to the list
+list1$newField <- c("A","B","C")
+# or
+list1[["newField"]] <- c("A","B","C")
+
+
 
 # --- --- ---
 # MATRIX
@@ -154,6 +177,7 @@ is.na( c(1,2,NA,NaN,5,6) )  # FALSE FALSE  TRUE  TRUE FALSE FALSE
 # --- --- ---
 # DATA FRAME
 # used to create simple tables
+# using data frame it's possible to manipulate the data better and it's possible to add any type of values
 table1 <- data.frame( column1= c("001", "002", "003") , column2= c("Marcel", "Samaruga", "Costa") )
 /*
   column1  column2
@@ -176,6 +200,13 @@ $class
 names(table1) # "column1" "column2"
 row.names(table1) # 1 2 3
 
+# print the first/last/dimension elements of the data frame
+head(table1)
+tail(table1)
+dim(table1)
+
+table1( c(1,3), c("column1","column3") )
+
 
 # Reading tabular data
 list1 <- list(foo=1:4, bar=0.6)
@@ -183,7 +214,7 @@ print( list[1] ) # it returns the LIST object from 1 to 4
 print( list[[1]] ) # it returns the SEQUENCE object from 1 to 4
 # accepts using the name of the column
 list1[["bar"]]
-# to represent the conjuction of elements use c() function, but it does not accept double bracket [[]]
+# to represent the conjuction of elements use c() function, but it doegis not accept double bracket [[]]
 list1[c("bar","foo")]
 
 #select the elements
@@ -211,7 +242,52 @@ str(song)
 # $ title   : chr "My Song"
 # $ duration: num 190
 # $ track   : num 5
+
+
+# --- --- ---
+# Order / Sort
+# sort -> sort a list by one column
+table1 <- sort(table1)
+
+# order shows the position of the value comparing to the order
+table1 <- data.frame( age=c(1,70,60,45,15) )
+sort(table1$age)
+# [1]  1 15 45 60 70
+order(table1$age)
+# [1] 1 5 4 3 2
+# applying
+table1[ order(table1$age) , ]
+table1[ order(table1$age , descending=TRUE ) , ]
  
+#     name               type diameter rotation has_rings
+#1 Mercury Terrestrial planet    0.382    58.64     FALSE
+#2 Venus Terrestrial planet    0.949  -243.02     FALSE
+#3 Earth Terrestrial planet    1.000     1.00     FALSE
+#4 Mars Terrestrial planet    0.532     1.03     FALSE
+#5 Jupiter          Gas giant   11.209     0.41      TRUE
+#6 Saturn          Gas giant    9.449     0.43      TRUE
+#7 Uranus          Gas giant    4.007    -0.72      TRUE
+#8 Neptune          Gas giant    3.883     0.67      TRUE
+
+# Planets that are smaller than planet Earth: small_planets_df
+small_planets_df <- planets_df[planets_df$diameter < 1, ]        # option 1
+small_planets_df  <- subset(planets_df, subset = diameter < 1)   # option 2
+
+# Planets that rotate faster than planet Earth: fast_planets_df
+slow_planets_df <- planets_df[abs(planets_df$rotation) > 1, ]      # option 1
+slow_planets_df <- subset(planets_df, subset = abs(rotation) > 1)  # option 2
+ 
+ 
+# Add masses to planets_df under the name "mass"
+planets_df <- data.frame(planets_df, mass=masses )
+
+# Name pluto correctly
+# to add a new line it's possible to use rbind function. But remember to rename the columns of the new line
+pluto <- data.frame(name="Pluto", type="Terrestrial planet",diameter = 0.18, rotation=-6.38, has_rings=FALSE)
+
+# Bind planets_df and pluto together: planets_df_ext
+planets_df_ext <- rbind(planets_df,pluto)
+
 # --- --- ---
 # CONDITIONALS
 #IF
@@ -219,3 +295,60 @@ if (!dir.exists("dados") && 1==1) {
   dir.create("dados")
   file.create("dados/dados.txt")
 }
+
+
+# --- --- ---
+# GRAPHICS
+# movies is already pre-loaded
+head(movies)
+
+# Create a boxplot of the runtime variable
+boxplot(movies$runtime)
+
+# Subset the dateframe and plot it entirely
+plot(movies[,c("rating", "votes", "runtime")] )
+
+# Create a pie chart of the table of counts of the genres
+pie(table(movies$genre))
+
+
+# customiza plot
+plot(movies$votes, movies$runtime,
+     main = "Votes versus Runtime",
+     xlab = "Number of votes [-]",
+     ylab = "Runtime [s]",
+     sub = "No clear correlation",
+     cex.axis = 0.8,
+	 pch = 9,
+     col = "#dd2d2d",
+	 col.main = 604)
+	 
+hist(movies$runtime,
+     breaks = 20,
+     xlim = c(90, 220),
+     main = "Distribution of Runtime",
+     xlab = "Runtime [-]",
+     col = "cyan",
+     border = "red")
+	 
+# List all the graphical parameters
+par()
+
+# Specify the mfrow parameter
+par(mfrow = c(2,1))
+
+# Build two plots
+plot(movies$votes, movies$rating)
+hist(movies$votes)
+
+# Build the grid matrix
+grid <- matrix(c(1, 2, 3, 3), nrow = 2)
+
+# Specify the layout
+layout(grid)
+
+# Build three plots
+plot(movies$rating, movies$runtime)
+plot(movies$votes, movies$runtime)
+boxplot(movies$runtime)
+
